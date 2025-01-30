@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Properties</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Property Listings</h1>
+  <div id="properties"></div>
+
+  <script>
+    // Fetch Properties data from the backend
+    fetch("http://localhost:5000/properties")
+      .then(res => res.json())
+      .then(properties => {
+        let html = "";
+        properties.forEach(property => {
+          html += `<div>
+            <h2>${property.title}</h2>
+            <p>${property.description}</p>
+            <p>Price: ₹${property.price}</p>
+            <p>Location: ${property.location.address}</p>
+            <p>Size: ${property.size} sqft</p>
+            <p>Bedrooms: ${property.bedrooms} | Bathrooms: ${property.bathrooms}</p>
+          </div>`;
+        });
+        document.getElementById("properties").innerHTML = html;
+      })
+      .catch(error => console.log("Error fetching properties:", error));
+  </script>
+</body>
+</html>

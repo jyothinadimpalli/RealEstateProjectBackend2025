@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Users</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Users List</h1>
+  <div id="users"></div>
+
+  <script>
+    // Fetch Users data from the backend
+    fetch("http://localhost:5000/users")
+      .then(res => res.json())
+      .then(users => {
+        let html = "";
+        users.forEach(user => {
+          html += `<div>
+            <h2>${user.name}</h2>
+            <p>Email: ${user.email}</p>
+            <p>Phone: ${user.phoneNumber}</p>
+            <p>Role: ${user.role}</p>
+          </div>`;
+        });
+        document.getElementById("users").innerHTML = html;
+      })
+      .catch(error => console.log("Error fetching users:", error));
+  </script>
+</body>
+</html>

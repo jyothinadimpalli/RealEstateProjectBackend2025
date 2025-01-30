@@ -14,16 +14,19 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Get all properties
-router.get("/", async (req, res) => {
-  const properties = await Property.find();
-  res.json(properties);
-});
 
-// Get single property
+// Get single property`
 router.get("/:id", async (req, res) => {
   const property = await Property.findById(req.params.id);
   res.json(property);
 });
 
+router.get("/", async (req, res) => {
+  try {
+    const properties = await Property.find();
+    res.json(properties);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 module.exports = router;
