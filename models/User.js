@@ -1,12 +1,10 @@
 const mongoose = require("mongoose");
-
 const UserSchema = new mongoose.Schema({
-  name: String,
-  email: { type: String, unique: true },
-  password: String,
-  role: { type: String, enum: ["Admin", "Buyer", "Builder"], default: "Buyer" },
-  phoneNumber: String,
-  savedProperties: [{ type: mongoose.Schema.Types.ObjectId, ref: "Property" }],
-}, { timestamps: true });
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: { type: String, enum: ["Buyer", "Admin", "Builder"], default: "Buyer" },
+  phoneNumber: { type: String, required: true }
+});
 
 module.exports = mongoose.model("User", UserSchema);
