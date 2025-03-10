@@ -1,8 +1,6 @@
 const express = require("express");
 const Property = require("../models/Property");
-
 const router = express.Router();
-
 // Add a new property
 router.post("/", async (req, res) => {
   try {
@@ -14,11 +12,20 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Get Property by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const propertyId = req.params.id;
+    const property = await Property.findById(propertyId);
 
-// Get single property`
-router.get("/:id", async (req, res) => {
-  const property = await Property.findById(req.params.id);
-  res.json(property);
+    if (!property) {
+      return res.status(404).json({ message: 'Property not found' });
+    }
+    res.status(200).json(property);
+  } catch (error) {
+    console.error('Error fetching property by ID:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
 });
 
 router.get("/", async (req, res) => {
